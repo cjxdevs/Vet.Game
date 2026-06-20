@@ -28,53 +28,63 @@ diseases = [
 
 #treatments for diseases
 treatments = {
-    "rabies": "rabies vaccine (pre-exposure) / supportive care (post-exposure)",
-    "parvovirus": "intravenous fluids, antiemetics, antibiotics (metronidazole)",
-    "distemper": "supportive care, antibiotics (amoxicillin), anticonvulsants",
-    "leptospirosis": "antibiotics (doxycycline, penicillin)",
-    "lyme disease": "antibiotics (doxycycline, amoxicillin)",
-    "ringworm": "antifungal (clotrimazole, miconazole, terbinafine)",
-    "mange": "antiparasitic (ivermectin, selamectin, amitraz)",
-    "fleas": "topical flea treatment (fipronil, imidacloprid)",
-    "ticks": "topical tick treatment (fipronil, permethrin)",
-    "heartworm": "preventative (ivermectin, milbemycin), adulticide (melarsomine)",
-    "roundworm": "dewormer (pyrantel pamoate, fenbendazole)",
-    "tapeworm": "dewormer (praziquantel, epsiprantel)",
-    "hookworm": "dewormer (pyrantel pamoate, fenbendazole)",
-    "parvo": "intravenous fluids, antiemetics, antibiotics (metronidazole)",
-    "kennel cough": "antibiotics (doxycycline, amoxicillin), cough suppressants",
-    "influenza": "supportive care, fluids, anti-inflammatories",
-    "pneumonia": "antibiotics (enrofloxacin, amoxicillin), oxygen therapy",
-    "bronchitis": "bronchodilators, corticosteroids, antibiotics",
-    "asthma": "bronchodilators, corticosteroids",
-    "diabetes": "insulin, dietary management",
-    "kidney failure": "fluid therapy, phosphate binders, dietary management",
-    "liver disease": "dietary management, antioxidants, ursodeoxycholic acid",
-    "heart disease": "diuretics (furosemide), ACE inhibitors, pimobendan",
-    "arthritis": "NSAIDs (meloxicam, carprofen), joint supplements",
-    "cancer": "chemotherapy, surgery, radiation, pain management",
-    "tumor": "surgical removal, chemotherapy",
-    "abscess": "drainage, antibiotics (amoxicillin, enrofloxacin)",
-    "infection": "antibiotics (amoxicillin, doxycycline, enrofloxacin)",
-    "sepsis": "intravenous fluids, broad-spectrum antibiotics, hospitalization",
-    "anemia": "iron supplements, blood transfusion, treat underlying cause",
-    "dehydration": "intravenous fluids, oral rehydration",
-    "malnutrition": "nutritional support, dietary correction",
-    "obesity": "dietary management, exercise",
-    "allergies": "antihistamines, corticosteroids, hypoallergenic diet",
-    "dermatitis": "topical treatment, corticosteroids, antibiotics",
-    "conjunctivitis": "topical antibiotics (neomycin), anti-inflammatories",
-    "glaucoma": "eye drops (latanoprost, timolol), surgery",
-    "cataracts": "surgery (removal), topical anti-inflammatories",
-    "deafness": "no treatment (supportive care), hearing aids (rare)",
-    "epilepsy": "anticonvulsants (phenobarbital, potassium bromide)",
-    "stroke": "supportive care, physical therapy, treat underlying cause",
-    "paralysis": "physical therapy, anti-inflammatories, treat underlying cause"
+    "rabies": ["rabies vaccine", "supportive care"],
+    "parvovirus": ["intravenous fluids", "antiemetics", "metronidazole"],
+    "distemper": ["supportive care", "amoxicillin", "anticonvulsants"],
+    "leptospirosis": ["doxycycline", "penicillin"],
+    "lyme disease": ["doxycycline", "amoxicillin"],
+    "ringworm": ["clotrimazole", "miconazole", "terbinafine"],
+    "mange": ["ivermectin", "selamectin", "amitraz"],
+    "fleas": ["fipronil", "imidacloprid"],
+    "ticks": ["fipronil", "permethrin"],
+    "heartworm": ["ivermectin", "milbemycin", "melarsomine"],
+    "roundworm": ["pyrantel pamoate", "fenbendazole"],
+    "tapeworm": ["praziquantel", "epsiprantel"],
+    "hookworm": ["pyrantel pamoate", "fenbendazole"],
+    "parvo": ["intravenous fluids", "antiemetics", "metronidazole"],
+    "kennel cough": ["doxycycline", "amoxicillin", "cough suppressants"],
+    "influenza": ["supportive care", "fluids", "anti-inflammatories"],
+    "pneumonia": ["enrofloxacin", "amoxicillin", "oxygen therapy"],
+    "bronchitis": ["bronchodilators", "corticosteroids", "antibiotics"],
+    "asthma": ["bronchodilators", "corticosteroids"],
+    "diabetes": ["insulin"],
+    "kidney failure": ["fluid therapy", "phosphate binders"],
+    "liver disease": ["dietary management", "antioxidants", "ursodeoxycholic acid"],
+    "heart disease": ["furosemide", "ACE inhibitors", "pimobendan"],
+    "arthritis": ["meloxicam", "carprofen", "joint supplements"],
+    "cancer": ["chemotherapy", "surgery", "radiation", "pain management"],
+    "tumor": ["surgical removal", "chemotherapy"],
+    "abscess": ["drainage", "amoxicillin", "enrofloxacin"],
+    "infection": ["amoxicillin", "doxycycline", "enrofloxacin"],
+    "sepsis": ["intravenous fluids", "broad-spectrum antibiotics", "hospitalization"],
+    "anemia": ["iron supplements", "blood transfusion"],
+    "dehydration": ["intravenous fluids", "oral rehydration"],
+    "malnutrition": ["nutritional support", "dietary correction"],
+    "obesity": ["dietary management", "exercise"],
+    "allergies": ["antihistamines", "corticosteroids", "hypoallergenic diet"],
+    "dermatitis": ["topical treatment", "corticosteroids", "antibiotics"],
+    "conjunctivitis": ["neomycin", "anti-inflammatories"],
+    "glaucoma": ["latanoprost", "timolol", "surgery"],
+    "cataracts": ["surgery", "topical anti-inflammatories"],
+    "deafness": ["no treatment", "supportive care"],
+    "epilepsy": ["phenobarbital", "potassium bromide"],
+    "stroke": ["supportive care", "physical therapy"],
+    "paralysis": ["physical therapy", "anti-inflammatories"]
 }
-affected_animal = random.choice(animals )
+
+affected_animal = random.choice(animals)
 affected_disease = random.choice(diseases)
 correct_treatment = treatments[affected_disease]
-print(f"A {affected_animal} has been suffering from {affected_disease}")
-print(f"To cure it you need to give {correct_treatment}")
 
- 
+print(f"A {affected_animal} has been suffering from {affected_disease}")
+
+
+player_guess = input(f"what drug would you like to give to {affected_animal} with the disease {affected_disease}? ")
+if player_guess.lower() in correct_treatment:
+    print(f"Congratualtions! you were able to save the {affected_animal}")
+else :
+    print(f"Sad you weren't able to save the {affected_animal}")
+    print(f"the correct drug(s) to give were {correct_treatment}")
+
+
+
