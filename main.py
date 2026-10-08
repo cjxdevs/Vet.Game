@@ -1,62 +1,130 @@
-import random
-
 from animal_disease import animal_diseases
 from Disease import diseases
 from animals import animals
-
-# NARRATOR CHOICE
-#narrator_choice_input = input("Choose your narrator type Normal or Unhinged: ").lower().strip()    
-#if narrator_choice_input == "normal":
-#    narrator = "normal"
-#elif narrator_choice_input == "unhinged":
-#    narrator = "unhinged"
-#else:
-#    print(f"Atleast choose the narrator choice correctly bro. Like what do you mean that you want a {narrator_choice_input} narrator")
-
-print("=" * 30)
-print("  Welcome fellow Vetrenarian")
-print("=" * 30)
-
+import random
+# MAIN GAME
+print("Hello vet")
 while True:
-
-# PATIENT GENERATION
-    species = random.choice(list(animals))
-    breed = random.choice(animals[species]["breed"])
-    possible_diseases = animal_diseases[species]
-    disease = random.choice(possible_diseases)
+    # GENERATE PATIENT
+    animal = random.choice(list(animals))
+    disease = random.choice(list(animal_diseases[animal]))
     info_disease = diseases[disease]
-    treatment = info_disease["treatment"]
-    symptoms = info_disease["symptoms"]
-    causes = info_disease["cause"]
-
-# GAME START
-    
-
-    print("A new patient has arrived")
-    input("Press enter for it's deatils.")
-    print(f"Species: {species}")
-    print(f"Breed: {breed}")
-    for i in range(len(symptoms)):
-        print("Symptoms", symptoms[i])
-
-    player_ask = input("Do you want to treat this animal? : ").lower().strip()
-
-    if player_ask == "yes":
-        player_answer_disease = input("Enter your diagnosis : ")
-        if player_answer_disease == disease:
-            print("You got the disease correct")
+    breed = random.choice(animals[animal]["breed"])
+    symptoms = list(info_disease["symptoms"])
+    # GENERATE WRONG DISEASES
+    wrong_diseases = animal_diseases[animal]
+    wrong_disease1 = random.choice(wrong_diseases)
+    wrong_disease2 = random.choice(wrong_diseases)
+    # Make sure wrong diseases aren't the real disease
+    while wrong_disease1 == disease or wrong_disease1 == wrong_disease2:
+        wrong_disease1 = random.choice(wrong_diseases)
+    while wrong_disease2 == disease or wrong_disease2 == wrong_disease1:
+        wrong_disease2 = random.choice(wrong_diseases)
+    # GENERATE TREATMENTS
+    treatments_list = info_disease["treatment"]
+    real_treatment = random.choice(treatments_list)
+    # Pick a disease that isn't the real disease
+    wrong_disease = random.choice(list(animal_diseases[animal]))
+    while wrong_disease == disease:
+        wrong_disease = random.choice(list(animal_diseases[animal]))
+    # Get treatments belonging to the wrong disease
+    wrong_treatment = diseases[wrong_disease]["treatment"]
+    wrong_treatment1 = random.choice(wrong_treatment)
+    wrong_treatment2 = random.choice(wrong_treatment)
+    # Make sure wrong treatments aren't the real treatment
+    # and aren't the same as each other
+    while wrong_treatment1 in treatments_list or wrong_treatment1 == wrong_treatment2:
+        wrong_treatment1 = random.choice(wrong_treatment)
+    while wrong_treatment2 in treatments_list or wrong_treatment2 == wrong_treatment1:
+        wrong_treatment2 = random.choice(wrong_treatment)
+    # SHOW PATIENT
+    input("\nA new patient arrives. Press enter to continue.")
+    print("\nSpecies:", animal)
+    print("Breed:", breed)
+    print("Symptoms:")
+    for symptom in symptoms:
+        print("-", symptom)
+    # CREATE OPTIONS
+    options_disease = [
+        wrong_disease1,
+        wrong_disease2,
+        disease
+    ]
+    options_treatment = [
+        wrong_treatment1,
+        wrong_treatment2,
+        real_treatment
+    ]
+    # Randomize the options
+    random.shuffle(options_disease)
+    random.shuffle(options_treatment)
+    # PLAYER DIAGNOSIS
+    player_answer_disease = None
+    diagnosis_correct = False
+    treat_animal = input(
+        "\nWould you like to diagnose this animal? (yes/no): ").lower().strip()
+    if treat_animal == "yes":
+        print("\nOptions for the diagnosis are:")
+        print("1.", options_disease[0])
+        print("2.", options_disease[1])
+        print("3.", options_disease[2])
+        player_answer_disease = int(input("Which is the correct option? (1, 2 or 3): ").strip())
+        if options_disease[player_answer_disease - 1] == disease:
+            print("This is the correct option.")
+            diagnosis_correct = True
         else:
-            print("You got the disease wrong")
-
-        print("===press Enter to continue===")
-        player_answer_treatment = input("Enter the drug/treatment you would like to give the animal : ").lower().strip()
-        if player_answer_treatment in treatment:
-            print("You got that correct too")
+            print(f"You were close. The correct answer is {disease}")
+    # PLAYER TREATMENT
+    player_answer_treatment = None
+    treatment_correct = False
+    player_treatment_ask = input("\nWould you also like to treat the animal? (yes/no) OR (1, 2): ").lower().strip()
+    if player_treatment_ask == "yes" or player_treatment_ask == "1":
+        print("\nTreatment options:")
+        print("1.", options_treatment[0])
+        print("2.", options_treatment[1])
+        print("3.", options_treatment[2])
+        player_answer_treatment = int(input("Which is the correct option? (1, 2 or 3): ").strip())
+        if options_treatment[player_answer_treatment - 1] == real_treatment:
+            print("This is the correct treatment.")
+            treatment_correct = True
         else:
-            print("Uhh.. You got that wrong somehow ?")
-    else:
-        print("You walk away. The animal's owner is not pleased.")
-    player_play_again = input("\nDo you want to treat another patient? (yes/no): ").lower().strip()
-    if player_play_again != "yes":
-        print("Thank you for it doc.")
+            print(f"The correct treatment was {real_treatment}")
+    # OWNER ASSURANCE
+    give_assurance_owner = input("\nWould you like to give the owner assurance? (yes/no): ").lower().strip()
+    if give_assurance_owner == "yes":
+        # CORRECT DIAGNOSIS
+        if diagnosis_correct:
+            print("You give the owner assurance and after some time the animal recovers and the owner is happy.")
+        # WRONG DIAGNOSIS
+        else:
+            chance = random.randint(1, 5)
+            if chance == 1:
+                print("You give the owner assurance and after some time the animal DIES and the owner files a lawsuit against you.")
+                print("\nKNOCK KNOCK")
+                print("OPEN THE DOOR")
+                print("IT'S THE POLICE")
+                player_choice_door = input("Do you open the door? (yes/no): ").lower().strip()
+                if player_choice_door == "yes":
+                    print("You open the door...")
+                    print("Your medical license is revoked and you are sent to jail for malpractice for 69 years.")
+                    print("You are now 69.5 years old.")
+                elif player_choice_door == "no":
+                    print("You don't open the door..")
+                    print("You run out the back door.")
+                    print("You are now studying medical science in a town named Bhaangbhosdipuri.")
+                    print("You return back after 67 years.")
+                else:
+                    print("You hesitate.")
+                    print("The animal dies and the owner is sad.")
+            else:
+                print("You give the owner assurance and somehow the animal recovers.")
+    elif give_assurance_owner == "no":
+        if diagnosis_correct:
+            print("The owner regrets that he brought his pet to you. But the animal recovers.")
+        else:
+            print("As expected by the owner, the animal dies..")
+    # PLAY AGAIN
+    player_ask_play_again = input("\nDo you want to treat another patient? (yes/no) OR (1, 2): ").lower().strip()
+    if player_ask_play_again == "no" or player_ask_play_again == "2":
+        print("\nThanks for giving my shit ass project a chance.")
         break
